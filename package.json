@@ -1,0 +1,16 @@
+{
+  "name": "ruleta-whatsapp",
+  "version": "1.0.0",
+  "description": "Bot de ruleta casino para WhatsApp con cavopoints",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "node-cron": "^3.0.3",
+    "pg": "^8.11.3",
+    "qrcode-terminal": "^0.12.0",
+    "whatsapp-web.js": "^1.23.0"
+  }
+}

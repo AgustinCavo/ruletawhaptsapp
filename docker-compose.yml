@@ -1,0 +1,32 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: cavopoints
+      POSTGRES_USER: ruleta
+      POSTGRES_PASSWORD: ruleta
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ruleta -d cavopoints"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  bot:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://ruleta:ruleta@db:5432/cavopoints
+      PUPPETEER_EXECUTABLE_PATH: /usr/bin/chromium
+    volumes:
+      - ./wwebjs_auth:/app/.wwebjs_auth
+    stdin_open: true
+    tty: true
+    restart: unless-stopped
+
+volumes:
+  pgdata:
